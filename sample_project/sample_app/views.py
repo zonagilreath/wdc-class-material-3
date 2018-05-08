@@ -15,7 +15,20 @@ def index(request):
         books = books.order_by('-popularity')
     return render(request, 'index.html', {
         'books': books,
+        'authors': Author.objects.all(),
         'sort_method': sort_method
+    })
+
+
+def create_book(request):
+    book_data = {
+        'title': request.POST['title'],
+        'author': request.POST['author'],
+        'isbn': request.POST['isbn'],
+        'popularity': request.POST['popularity'],
+    }
+    return render(request, 'create_book.html', {
+        'data': book_data
     })
 
 
