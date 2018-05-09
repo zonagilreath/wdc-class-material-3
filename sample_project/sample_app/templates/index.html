@@ -21,6 +21,7 @@
           <th>Book Title</th>
           <th>Author</th>
           <th><a href="/?sort={% if sort_method == 'asc' %}desc{% else %}asc{% endif %}">Popularity({% if sort_method == 'asc' %} v {% else %} ^ {% endif %})</a></th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -30,6 +31,14 @@
             <td>{{ book.title}}</td>
             <td><a href="{% url 'author_by_id' book.author.id %}">{{ book.author.name}}</a></td>
             <td>{{ book.popularity}}</td>
+            <td>
+              <form class="" action="/delete_book" method="post">
+                {% csrf_token %}
+                <input type="hidden" name='book_id' value='{{book.id}}'>
+                <input type="submit" value='delete'>
+              </form>
+
+            </td>
           </tr>
         {% endfor %}
       </tbody>
@@ -38,8 +47,9 @@
     <h1>Create a new book</h1>
     <form class="" action="/create_book" method="POST">
       {% csrf_token %}
+
       <label for="title">Title:</label>
-      <input id="title" type="text" name='title' value=''>
+      <input id="title" type="text" name='title' value='' {% if 'title' in errors %}style='border: 1px red solid'{% endif %}> <span style='color:red'>{{errors.title}}</span>
 
         <br>
 
@@ -53,7 +63,7 @@
       <br>
 
       <label for="isbn">ISBN:</label>
-      <input id="isbn" type="text" name='isbn' value='XYZ'>
+      <input id="isbn" type="text" name='isbn' {% if book_data and 'isbn' in book_data %} value='{{book_data.isbn}}' {% else %} value='' {% endif %}>
 
       <br>
 
