@@ -3,8 +3,24 @@
   <head>
     <meta charset="utf-8">
     <title></title>
+    <style media="screen">
+      li{
+        list-style-type: none;
+        font-weight: bold;
+      }
+      li.success{
+        color: green;
+      }
+    </style>
   </head>
   <body>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
     {{data}}
   </body>
 </html>

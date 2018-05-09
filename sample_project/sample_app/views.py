@@ -1,7 +1,9 @@
+from datetime import datetime
+
 from django.http import HttpResponseNotFound
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from datetime import datetime
+from django.contrib import messages
 
 from .models import Author, Book
 
@@ -21,6 +23,7 @@ def index(request):
 
 
 def create_book(request):
+    messages.success(request, 'Book has been created!')
     book_data = {
         'title': request.POST['title'],
         'author': request.POST['author'],
