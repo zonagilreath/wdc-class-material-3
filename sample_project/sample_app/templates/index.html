@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" crossorigin="anonymous">
     <title>Our library</title>
+    <style type="text/css">
+      .error {
+        color: red;
+      }
+    </style>
   </head>
   <body style='padding: 0px 20px'>
     <h1>Welcome to our Library!</h1>
@@ -36,10 +41,18 @@
     </table>
     <p><a href="{% url 'authors' %}">Prefer to browse by author?</a></p>
     <h1>Create a new book</h1>
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
     <form class="" action="/create_book" method="POST">
       {% csrf_token %}
+      
       <label for="title">Title:</label>
-      <input id="title" type="text" name='title' value=''>
+      <input id="title" type="text" name='title' value='{{ title }}'>
 
         <br>
 
@@ -53,7 +66,7 @@
       <br>
 
       <label for="isbn">ISBN:</label>
-      <input id="isbn" type="text" name='isbn' value='XYZ'>
+      <input id="isbn" type="text" name='isbn' value='{{ isbn }}'>
 
       <br>
 

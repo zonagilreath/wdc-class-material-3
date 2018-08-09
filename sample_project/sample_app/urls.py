@@ -8,4 +8,12 @@ urlpatterns = [
     path('author/<int:author_id>/', views.author, name='author_by_id'),
     path('create_book', views.create_book, name='create_book'),
     path('', views.index, name='index'),
+    path(
+        'form-error/<int:error_id>', 
+        views.index, 
+        # kwargs={
+        #     'title': '',
+        #     'isbn': ''
+        # }, 
+        name='form-error'),
 ]
